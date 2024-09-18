@@ -36,7 +36,7 @@ head(penguins)
 
 Create scatterplot 
 ```{r}
-scatter_plot <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point() +
+scatter_plot = ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point() +
   labs(title = "Scatterplot of Flipper Length vs Bill Length",
        x = "Bill Length (mm)",
        y = "Flipper Length (mm)",
@@ -72,18 +72,39 @@ print(df2)
 Take the mean of each variable in my dataframe.
 
 ```{r}
-mean_numeric <- mean(pull(df, numeric_var)) 
-mean_logical <- mean(pull(df, logical_var))
-mean_character <- tryCatch(mean(pull(df, character_var)), error = function(e) e)
-mean_factor <- tryCatch(mean(pull(df, factor_var)), error = function(e) e) 
+mean_numeric = mean(pull(df2, numeric_var)) 
+mean_logical = mean(pull(df2, logical_var))
+mean_character = tryCatch(mean(pull(df2, character_var)), error = function(e) e)
+mean_factor = tryCatch(mean(pull(df2, factor_var)), error = function(e) e) 
 
 cat("Mean of numeric variable:", mean_numeric, "\n")
 cat("Mean of logical variable:", mean_logical, "\n")
-cat("Mean of character variable:", mean_character$message, "\n")
-cat("Mean of factor variable:", mean_factor$message, "\n")
-
+cat("Mean of character variable:", mean_character, "\n")
+cat("Mean of factor variable:", mean_factor, "\n")
 ```
 
-The mean of numeric variable and logical variable works, but the mean of character variable and factor variable does not.
+Explanation: The mean of numeric variable and logical variable works, but the mean of character variable and factor variable does not.
+
+Convert variables from one type to another.
+```{r}
+numeric_logical = as.numeric(df2$logical_var)
+numeric_character = tryCatch(as.numeric(df2$character_var), error = function(e) e)
+numeric_factor = as.numeric(df2$factor_var)
+
+mean_numeric_logical = mean(numeric_logical)
+mean_numeric_character = tryCatch(mean(numeric_character), error = function(e) e)
+mean_numeric_factor = mean(numeric_factor)
+
+cat("Mean of converted logical variable:", mean_numeric_logical, "\n")
+cat("Mean of converted character variable:", mean_numeric_character, "\n")
+cat("Mean of converted factor variable:", mean_numeric_factor, "\n")
+```
+Explanation: The mean of converted logical variable and converted factor variable works, but converted character variable does not work.
+
+Numeric variables are straightforward and can find the mean by arithmetic operations.
+Logical variables are coerced to 1 and 0 respectively in arithmetic operations.
+Character variables does not represent numbers and thus are not able to have arithmetic operations.
+Factor variables are ordered or unordered categorical variable, it cannot directly have arithmetic operations but can have arithmetic operations by coercing a factor to a numeric type using as.numeric() because R treats factors as integers based on the levels, but this is typically not meaningful unless explicitly intended.
+
 
 
