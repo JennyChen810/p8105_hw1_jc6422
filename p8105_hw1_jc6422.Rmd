@@ -6,7 +6,7 @@ output: github_document
 ---
 ## Problem 1
 
-## load the libraries
+load the libraries
 
 ```{r}
 library(palmerpenguins)
@@ -14,12 +14,12 @@ library(ggplot2)
 library(tidyverse)
 ```
 
-## load the dataset
+load the dataset
 ```{r}
 data("penguins", package = "palmerpenguins")
 ```
 
-## Description of the dataset
+Description of the dataset
 
 ```{r}
 n_rows = nrow(penguins)
@@ -29,12 +29,12 @@ cat("The penguins dataset has", n_rows, "rows and", n_cols, "columns.\n")
 cat("The mean flipper length (in mm) is", round(mean_flipper_length, 2), ".\n")
 
 ```
-## View the first few rows of the dataset.
+View the first few rows of the dataset.
 ```{r}
 head(penguins)
 ```
 
-## Create scatterplot 
+Create scatterplot 
 ```{r}
 scatter_plot <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point() +
   labs(title = "Scatterplot of Flipper Length vs Bill Length",
@@ -44,14 +44,14 @@ scatter_plot <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, 
 print(scatter_plot)
 ```
 
-## Save the scatterplot to a file.
+Save the scatterplot to a file.
 ```{r}
 ggsave("scatterplot_penguins.png", plot = scatter_plot)
 ```
 
 ## Problem 2
 
-## Create data frame with different variables.
+Create data frame with different variables.
 ```{r}
 # Create a random sample of size 10 from a standard normal distribution
 numeric_var = rnorm(10)
@@ -60,16 +60,30 @@ numeric_var = rnorm(10)
 logical_var = numeric_var > 0
 
 # Character vector of length 10
-character_var <- letters[1:10]  # Use the first 10 letters of the alphabet
+character_var = letters[1:10]
 
 # Factor vector of length 10, with 3 different factor levels
-factor_var <- factor(rep(c("Level1", "Level2", "Level3"), length.out = 10))
+factor_var = factor(rep(c("Level1", "Level2", "Level3"), length.out = 10))
 
-# Create a data frame with the variables
-df2 <- data.frame(numeric_var, logical_var, character_var, factor_var)
-
-# View the data frame
+df2 = data.frame(numeric_var, logical_var, character_var, factor_var)
 print(df2)
 
 ```
+Take the mean of each variable in my dataframe.
+
+```{r}
+mean_numeric <- mean(pull(df, numeric_var)) 
+mean_logical <- mean(pull(df, logical_var))
+mean_character <- tryCatch(mean(pull(df, character_var)), error = function(e) e)
+mean_factor <- tryCatch(mean(pull(df, factor_var)), error = function(e) e) 
+
+cat("Mean of numeric variable:", mean_numeric, "\n")
+cat("Mean of logical variable:", mean_logical, "\n")
+cat("Mean of character variable:", mean_character$message, "\n")
+cat("Mean of factor variable:", mean_factor$message, "\n")
+
+```
+
+The mean of numeric variable and logical variable works, but the mean of character variable and factor variable does not.
+
 
