@@ -1,0 +1,52 @@
+---
+title: "p8105_hw1_jc6422"
+author: "Jianing Chen"
+date: "2024-09-18"
+output: github_document
+---
+## Problem 1
+
+## load the libraries
+
+```{r}
+library(palmerpenguins)
+library(ggplot2)
+library(tidyverse)
+```
+
+## load the dataset
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+## Description of the dataset
+
+```{r}
+n_rows = nrow(penguins)
+n_cols = ncol(penguins)
+mean_flipper_length = mean(penguins$flipper_length_mm, na.rm = TRUE)
+cat("The penguins dataset has", n_rows, "rows and", n_cols, "columns.\n")
+cat("The mean flipper length (in mm) is", round(mean_flipper_length, 2), ".\n")
+
+```
+## View the first few rows of the dataset.
+```{r}
+head(penguins)
+```
+
+## Create scatterplot 
+```{r}
+scatter_plot <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  labs(title = "Scatterplot of Flipper Length vs Bill Length",
+       x = "Bill Length (mm)",
+       y = "Flipper Length (mm)",
+       color = "Species")
+print(scatter_plot)
+```
+
+## Save the scatterplot to a file.
+```{r}
+ggsave("scatterplot_penguins.png", plot = scatter_plot)
+```
+
