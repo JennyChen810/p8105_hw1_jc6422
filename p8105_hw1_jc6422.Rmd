@@ -11,7 +11,6 @@ load the libraries
 ```{r}
 library(palmerpenguins)
 library(ggplot2)
-library(tidyverse)
 ```
 
 load the dataset
@@ -29,14 +28,21 @@ cat("The penguins dataset has", n_rows, "rows and", n_cols, "columns.\n")
 cat("The mean flipper length (in mm) is", round(mean_flipper_length, 2), ".\n")
 
 ```
-View the first few rows of the dataset.
+View the dataset.
 ```{r}
+View(penguins)
 head(penguins)
 ```
 
+There are three species of the penguin: Adelie, Chinstrap, Gentoo.
+There are three islands where the penguin was observed: Biscoe, Dream, Torgersen.
+The dataset includes several variables such as bill length, bill depth, flipper length, body mass, and sex.
+
+
+
 Create scatterplot 
 ```{r}
-scatter_plot = ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point() +
+scatter_plot = ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point(na.rm = TRUE) +
   labs(title = "Scatterplot of Flipper Length vs Bill Length",
        x = "Bill Length (mm)",
        y = "Flipper Length (mm)",
@@ -53,6 +59,7 @@ ggsave("scatterplot_penguins.png", plot = scatter_plot)
 
 Create data frame with different variables.
 ```{r}
+library(tidyverse)
 # Create a random sample of size 10 from a standard normal distribution
 numeric_var = rnorm(10)
 
