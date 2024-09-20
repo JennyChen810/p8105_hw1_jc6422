@@ -11,6 +11,7 @@ load the libraries
 ```{r}
 library(palmerpenguins)
 library(ggplot2)
+library(tidyverse)
 ```
 
 load the dataset
@@ -57,32 +58,29 @@ ggsave("scatterplot_penguins.png", plot = scatter_plot)
 
 ## Problem 2
 
-Create data frame with different variables.
+Use tibble function and create data frame with different variables.
 ```{r}
-library(tidyverse)
-# Create a random sample of size 10 from a standard normal distribution
-numeric_var = rnorm(10)
+df2 = tibble(
+numeric_var = rnorm(10),
 
-# Logical vector indicating whether elements of the sample are greater than 0
-logical_var = numeric_var > 0
+logical_var = numeric_var > 0,
 
-# Character vector of length 10
-character_var = letters[1:10]
+character_var = letters[1:10],
 
-# Factor vector of length 10, with 3 different factor levels
 factor_var = factor(rep(c("Level1", "Level2", "Level3"), length.out = 10))
+)
 
-df2 = data.frame(numeric_var, logical_var, character_var, factor_var)
-print(df2)
 
 ```
-Take the mean of each variable in my dataframe.
+
+
+Take the mean of each variable in my dataframe by pull function.
 
 ```{r}
 mean_numeric = mean(pull(df2, numeric_var)) 
 mean_logical = mean(pull(df2, logical_var))
-mean_character = tryCatch(mean(pull(df2, character_var)), error = function(e) e)
-mean_factor = tryCatch(mean(pull(df2, factor_var)), error = function(e) e) 
+mean_character = mean(pull(df2, character_var))
+mean_factor = mean(pull(df2, factor_var)) 
 
 cat("Mean of numeric variable:", mean_numeric, "\n")
 cat("Mean of logical variable:", mean_logical, "\n")
@@ -95,11 +93,11 @@ Explanation: The mean of numeric variable and logical variable works, but the me
 Convert variables from one type to another.
 ```{r}
 numeric_logical = as.numeric(df2$logical_var)
-numeric_character = tryCatch(as.numeric(df2$character_var), error = function(e) e)
+numeric_character = as.numeric(df2$character_var)
 numeric_factor = as.numeric(df2$factor_var)
 
 mean_numeric_logical = mean(numeric_logical)
-mean_numeric_character = tryCatch(mean(numeric_character), error = function(e) e)
+mean_numeric_character = mean(numeric_character)
 mean_numeric_factor = mean(numeric_factor)
 
 cat("Mean of converted logical variable:", mean_numeric_logical, "\n")
